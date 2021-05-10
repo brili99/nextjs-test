@@ -10,9 +10,10 @@ if (!admin.apps.length) {
 const db = admin.firestore();
 
 export default (req, res) => {
-    // var q = url.parse(req.url, true).query;
-    // var device = q.device;
     var device = req.query.device;
+    db.collection('device').doc(device).set({
+        'last_online': admin.firestore.Timestamp.now()
+    });
 
     res.statusCode = 200
     res.json({ device: device })

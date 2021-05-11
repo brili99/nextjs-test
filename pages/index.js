@@ -19,7 +19,7 @@ const Home = (props) => {
           <Col sm='6'>
             <Card className="m-2">
               <CardBody>
-                <CardTitle tag="h5">Card title</CardTitle>
+                <CardTitle tag="h5">Card 1</CardTitle>
                 <CardSubtitle tag="h6" className="mb-2 text-muted">Card subtitle</CardSubtitle>
                 <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
                 <Button>Button</Button>
@@ -29,7 +29,7 @@ const Home = (props) => {
           <Col sm='6'>
             <Card className="m-2">
               <CardBody>
-                <CardTitle tag="h5">Card title</CardTitle>
+                <CardTitle tag="h5">Card 2</CardTitle>
                 <CardSubtitle tag="h6" className="mb-2 text-muted">Card subtitle</CardSubtitle>
                 <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
                 <Button>Button</Button>

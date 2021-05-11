@@ -1,7 +1,12 @@
 import Head from 'next/head';
+import 'bootstrap/dist/css/bootstrap.css';
 import { Navbar } from '../components/Navbar';
+import {
+  Container, Row, Col, Card, CardImg, CardText, CardBody,
+  CardTitle, CardSubtitle, Button
+} from 'reactstrap';
 
-export default function Home() {
+const Home = (props) => {
   return (
     <div>
       <Head>
@@ -9,7 +14,33 @@ export default function Home() {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <Navbar />
-      <div>Hello Worlda</div>
+      <Container>
+        <Row>
+          <Col sm='6'>
+            <Card className="m-2">
+              <CardBody>
+                <CardTitle tag="h5">Card title</CardTitle>
+                <CardSubtitle tag="h6" className="mb-2 text-muted">Card subtitle</CardSubtitle>
+                <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+                <Button>Button</Button>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col sm='6'>
+            <Card className="m-2">
+              <CardBody>
+                <CardTitle tag="h5">Card title</CardTitle>
+                <CardSubtitle tag="h6" className="mb-2 text-muted">Card subtitle</CardSubtitle>
+                <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+                <Button>Button</Button>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+
     </div>
   );
-}
+};
+
+export default Home;

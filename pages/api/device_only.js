@@ -11,35 +11,6 @@ if (!admin.apps.length) {
 }
 const db = admin.firestore();
 
-// export default (req, res) => {
-//     var device = req.query.device;
-//     var timestamp = admin.firestore.Timestamp.now();
-//     var hour_now = timestamp.toDate().getHours();
-//     var minute_now = timestamp.toDate().getMinutes();
-//     db.collection('device').doc(device).update({
-//         'last_online': timestamp
-//     });
-
-//     db.collection('device').doc(device).get().then(queryResult => {
-//         const arr_jadwal = queryResult.data().jadwal;
-//         const arr_time = [];
-//         arr_jadwal.forEach(jadwal => {
-//             var time = "";
-//             time += jadwal.toDate().getHours() + ":";
-//             time += jadwal.toDate().getMinutes() + ":";
-//             time += jadwal.toDate().getSeconds();
-//             arr_time.push(time);
-//         });
-
-//         res.statusCode = 200;
-//         res.json({
-//             device: device,
-//             timestamp: timestamp.toMillis(),
-//             jadwal: arr_jadwal
-//         });
-//     });
-// }
-
 async function handler(req, res) {
     var device = req.query.device;
     var timestamp = admin.firestore.Timestamp.now();
@@ -49,24 +20,31 @@ async function handler(req, res) {
         'last_online': timestamp
     });
 
-    await db.collection('device').doc(device).get().then(queryResult => {
-        const arr_jadwal = queryResult.data().jadwal;
-        const arr_time = [];
-        arr_jadwal.forEach(jadwal => {
-            var time = "";
-            time += jadwal.toDate().getHours() + ":";
-            time += jadwal.toDate().getMinutes() + ":";
-            time += jadwal.toDate().getSeconds();
-            arr_time.push(time);
+   
+    await db.collection("device").doc(device).collection("jadwal").get()
+        .then(function (querySnapshot) {
+            var kasih_pakan = false;
+            var jumlah_pakan_gr = 0;
+
+            querySnapshot.forEach(function (doc) {
+                // console.log(doc.id, " => ", doc.data());
+                var jadwal_hour = doc.data().waktu.toDate().getHours();
+                var jadwal_minute = doc.data().waktu.toDate().getMinutes();
+                if (jadwal_hour == hour_now && jadwal_minute == minute_now) {
+                    kasih_pakan = true;
+                    jumlah_pakan_gr = doc.data().jumlah_pakan_gr;
+                }
+            });
+            
+            res.statusCode = 200;
+            res.json({
+                device: device,
+                timestamp: timestamp.toMillis(),
+                kasih_pakan: kasih_pakan,
+                jumlah_pakan_gr: jumlah_pakan_gr
+            });
         });
 
-        res.statusCode = 200;
-        res.json({
-            device: device,
-            timestamp: timestamp.toMillis(),
-            jadwal: arr_jadwal
-        });
-    });
 }
 
 export default handler
